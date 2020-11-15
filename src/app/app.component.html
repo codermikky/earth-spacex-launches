@@ -1,0 +1,68 @@
+<div *ngIf="loaderService.loader" class="loader-wrapper">
+	<div class="loader"></div>
+</div>
+<h1 class="grid-title center">
+	SpaceX Launch Programs
+</h1>
+<app-data-grid [data]="launcList">
+	<ng-template appGridFilter order="1">
+		<div class="filter-title center">Launch Year</div>
+		<div class="years">
+			<div class="year center" *ngFor="let y of years" (click)="appliedFilter($event, 'launch_year')">
+				<span class="btn"  attr.value="{{y}}"  [ngClass]="{'active': y == state.launch_year}">{{y}}</span>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template appGridFilter order="2">
+		<div class="filter-title center">
+			<span class="txt">Successfull Launch</span>
+		</div>
+		<div class="filter-section" (click)="appliedFilter($event, 'launch_success')">
+			<div class="btn" [ngClass]="{'active': 'true'== state.launch_success}" [attr.value]="'true'">True</div>
+			<div class="btn" [ngClass]="{'active': 'false' == state.launch_success}" [attr.value]="'false'">
+				False
+			</div>
+		</div>
+	</ng-template>
+	<ng-template appGridFilter order="3">
+		<div class="filter-title center">
+			<span class="txt">Successfull Landing</span>
+		</div>
+		<div class="filter-section" (click)="appliedFilter($event, 'land_success')">
+			<div class="btn" [ngClass]="{'active': 'true' == state.land_success}" [attr.value]="'true'">True
+			</div>
+			<div class="btn" [ngClass]="{'active': 'false'== state.land_success}" [attr.value]="'false'">
+				False
+			</div>
+		</div>
+	</ng-template>
+	<ng-template appCardTmp let-dataItem>
+		<div class="card">
+			<div class="card-header center">
+				<img src="{{dataItem.links.mission_patch_small}}" alt="" />
+      </div>
+				<div class="card-body">
+					<div class="rocket-name bold mission-name ">
+						{{dataItem.mission_name}}#{{dataItem.flight_number}}
+					</div>
+					<div class="mission-list">
+						<span class="bold">Mission Ids:</span>
+						<ul>
+							<li *ngFor="let id of dataItem.mission_id">{{id}}</li>
+						</ul>
+					</div>
+					<div class="launch-year">
+						<span class="bold"> Launch Year:</span> {{dataItem.launch_year}}
+					</div>
+					<div class="success-launch">
+						<span class="bold">Successful Launch:</span>
+						{{dataItem.launch_success}}
+					</div>
+					<div class="success-landing">
+						<span class="bold">Successful Landing:</span>
+						{{dataItem.launch_landing}}
+					</div>
+				</div>
+			</div>
+	</ng-template>
+</app-data-grid>

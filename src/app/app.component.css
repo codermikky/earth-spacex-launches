@@ -1,0 +1,113 @@
+p {
+  font-family: Lato;
+}
+
+.mission-name {
+  color: var(--mission_name);
+  text-transform: capitalize;
+}
+.card-header img {
+  max-width: 256px;
+  max-height: 256px;
+}
+.card {
+  padding: 1.5rem;
+}
+.card-header {
+  background-color: var(--light_grey);
+}
+.card-body {
+  background-color: #fff;
+}
+.card-header img {
+  object-fit: contain;
+  max-width: 250px;
+  max-height: 250px;
+  height: 120px;
+  width: 120px;
+}
+
+/* filters */
+.years {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.year {
+  width: 50%;
+  box-sizing: border-box;
+}
+.btn {
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  background-color: var(--btn_primary);
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 1.5rem;
+  line-height: 0.5rem;
+  width: 4.5rem;
+  max-width: 5rem;
+  text-align: center;
+}
+.btn:hover {
+  background-color: var(--btn_hover);
+}
+.btn:active {
+  border: 1px solid var(--btn_primary);
+}
+
+.filter-section {
+  display: flex;
+  justify-content: space-around;
+}
+.filter-title:after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 150px;
+  background-color: #56565647;
+  margin: auto;
+}
+.btn.active {
+  background-color: var(--btn_hover);
+}
+@media screen and (min-width: 700px) {
+  .grid-title {
+    margin: 1rem 0;
+    text-align: left;
+  }
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.loader-wrapper {
+  background: none repeat scroll 0 0 black;
+  position: fixed;
+  display: block;
+  opacity: 0.5;
+  z-index: 1000001;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

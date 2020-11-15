@@ -1,0 +1,20 @@
+<div class="wrapper">
+	<div class="grid-filters">
+		<h4>Filters</h4>
+		<div class="filter" *ngFor="let item of getFiltersList()">
+			<ng-container [ngTemplateOutlet]="item.template"> </ng-container>
+		</div>
+	</div>
+	<div class="empty" *ngIf="data.length == 0">
+		No Data Available
+	</div>
+	<div class="grid-body">
+		<div class="grid-item" *ngFor="let item of data">
+			<ng-container [ngTemplateOutlet]="gridItem.template" [ngTemplateOutletContext]="{$implicit: item}">
+			</ng-container>
+		</div>
+	</div>
+	<div class="grid-footer">
+		developed by : Sai Deep Konduri
+	</div>
+</div>
