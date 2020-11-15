@@ -1,4 +1,6 @@
-import { Component, VERSION } from "@angular/core";
+import { Component, OnDestroy, OnInit, VERSION } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ApiService } from "./services/api.service";
 import { LoaderService } from "./services/loader.service";
 
@@ -7,7 +9,8 @@ import { LoaderService } from "./services/loader.service";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  unSub: Subject<boolean> = new Subject<boolean>();
   constructor(
     private apiService: ApiService,
     public loaderService: LoaderService
@@ -37,15 +40,18 @@ export class AppComponent {
   };
   ngOnInit() {
     this.loaderService.setLoaderState(true);
-    this.apiService.getAllLaunches().subscribe(
-      (data: any[]) => {
-        this.launcList = data;
-        this.loaderService.setLoaderState(false);
-      },
-      error => {
-        this.loaderService.setLoaderState(false);
-      }
-    );
+    this.apiService
+      .getAllLaunches()
+      .pipe(takeUntil(this.unSub))
+      .subscribe(
+        (data: any[]) => {
+          this.launcList = data;
+          this.loaderService.setLoaderState(false);
+        },
+        error => {
+          this.loaderService.setLoaderState(false);
+        }
+      );
   }
 
   onStateChange(state) {
@@ -74,14 +80,21 @@ export class AppComponent {
 
   getFilteredList() {
     this.loaderService.setLoaderState(true);
-    this.apiService.getAllLaunches(this.state).subscribe(
-      data => {
-        this.launcList = data;
-        this.loaderService.setLoaderState(false);
-      },
-      error => {
-        this.loaderService.setLoaderState(false);
-      }
-    );
+    this.apiService
+      .getAllLaunches(this.state)
+      .pipe(takeUntil(this.unSub))
+      .subscribe(
+        data => {
+          this.launcList = data;
+          this.loaderService.setLoaderState(false);
+        },
+        error => {
+          this.loaderService.setLoaderState(false);
+        }
+      );
+  }
+  ngOnDestroy() {
+    this.unSub.next(true);
+    this.unSub.unsubscribe();
   }
 }
